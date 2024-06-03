@@ -7,13 +7,14 @@ package Produto;
 public class Disponivel implements EstadoProduto{
 
     @Override
-    public void adicionar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void adicionar(Produto produto) {
+        System.out.println("Esse produto já está disponível.");
     }
 
     @Override
-    public void remover() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void remover(Produto produto) {
+        System.out.println("Atualizando status de disponibilidade do produto...");
+        produto.setEstado(new Indisponivel());
+        System.out.println("Produto indisponibilizado com sucesso!");
     }
-    
 }

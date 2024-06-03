@@ -6,7 +6,7 @@ package Produto;
 
 import Categoria.Categoria;
 
-public class Produto implements EstadoProduto{
+public class Produto {
     private int produto_id;
     private String nome;
     private String descricao;
@@ -62,14 +62,13 @@ public class Produto implements EstadoProduto{
         this.categoria = categoria;
     }
     
-    
-    
     @Override
     public void adicionar(){
-        
+        estado.adicionar(this);
     }
+    
     @Override
     public void remover(){
-        
+       estado.remover(this); 
     }
 }
