@@ -5,22 +5,18 @@
 package Pessoa;
 
 public class Gerente extends Pessoa{
-    private int salario;
+    private double salario;
 
-    public Gerente(int id, int salario, String nome, String email, String senha) {
+    public Gerente(int id, double salario, String nome, String email, String senha) {
         super(id, nome, email, senha);
         this.salario = salario;
     }
 
-    public int getSalario() {
+    public double getSalario() {
         return salario;
     }
 
-    public void setSalario(int salario) {
+    public void setSalario(double salario) {
         this.salario = salario;
-    }
-    
-    public void calcularSalario(){
-        
     }
 }

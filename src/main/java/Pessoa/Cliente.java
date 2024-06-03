@@ -29,6 +29,4 @@ public class Cliente extends Pessoa{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
-    
 }
