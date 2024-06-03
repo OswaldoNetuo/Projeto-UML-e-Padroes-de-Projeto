@@ -4,10 +4,6 @@
  */
 package Pessoa;
 
-/**
- *
- * @author Estefani
- */
 public class PessoaFactory {
 
     public Pessoa criaPessoa(String tipo, int id, double salario, String nome, String email, String senha, String endereco, String telefone) {
