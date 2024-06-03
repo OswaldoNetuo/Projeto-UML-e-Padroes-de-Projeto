@@ -5,6 +5,6 @@
 package Produto;
 
 public interface EstadoProduto {
-    public void adicionar();
-    public void remover();
+    public void adicionar(Produto produto);
+    public void remover(Produto produto);
 }
