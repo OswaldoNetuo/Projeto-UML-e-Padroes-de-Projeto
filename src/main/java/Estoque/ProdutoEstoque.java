@@ -7,6 +7,7 @@ package Estoque;
 import Produto.Produto;
 
 public class ProdutoEstoque {
+
     private Produto produto;
     private int quantidade;
 
@@ -30,6 +31,12 @@ public class ProdutoEstoque {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
+    public void atualizarQuantidade(int quantidade) {
+        if (this.quantidade + quantidade < 0) {
+            System.out.println("A quantidade que deseja remover é maior que a quantidade em estoque, tente novamente.");
+        } else {
+            this.quantidade += quantidade;
+        }
+    }
 }

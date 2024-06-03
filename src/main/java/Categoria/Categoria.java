@@ -5,6 +5,7 @@
 package Categoria;
 
 public class Categoria {
+
     private int categoria_id;
     private String nome;
     private String descricao;

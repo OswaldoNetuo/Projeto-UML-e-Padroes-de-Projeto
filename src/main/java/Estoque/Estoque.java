@@ -9,8 +9,15 @@ import java.util.ArrayList;
 public class Estoque {
     private ArrayList<ProdutoEstoque> produtos;
 
+    public Estoque(ArrayList<ProdutoEstoque> produtos) {
+        this.produtos = produtos;
+    }
+    
     public ArrayList<ProdutoEstoque> getProdutos() {
         return produtos;
     }
-    
+
+    public void setProdutos(ArrayList<ProdutoEstoque> produtos) {
+        this.produtos = produtos;
+    }  
 }

@@ -7,7 +7,7 @@ package Produto;
 import Categoria.Categoria;
 
 public class ProdutoFactory {
-    public void criaProduto(int produto_id, String nome, String descricao, double preco, Categoria categoria) {
-        
+    public Produto criaProduto(int id, String nome, String descricao, double preco,EstadoProduto estado, Categoria categoria) {
+      return new Produto(id, nome, descricao, preco, estado, categoria);  
     }
 }

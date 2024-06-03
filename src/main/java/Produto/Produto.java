@@ -14,6 +14,15 @@ public class Produto {
     private EstadoProduto estado;
     private Categoria categoria;
 
+      public Produto(int produto_id, String nome, String descricao, double preco, EstadoProduto estado, Categoria categoria) {
+        this.produto_id = produto_id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.estado = estado;
+        this.categoria = categoria;
+    }
+
     public int getProduto_id() {
         return produto_id;
     }
@@ -62,12 +71,12 @@ public class Produto {
         this.categoria = categoria;
     }
     
-    @Override
+    //@Override
     public void adicionar(){
         estado.adicionar(this);
     }
     
-    @Override
+    //@Override
     public void remover(){
        estado.remover(this); 
     }

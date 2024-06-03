@@ -9,5 +9,8 @@ package Categoria;
  * @author Estefani
  */
 public class CategoriaFactory {
-    
+
+    public Categoria criaCategoria(int codigo, String nome, String descricao) {
+        return new Categoria(codigo, nome, descricao);
+    }
 }
