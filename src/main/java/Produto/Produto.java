@@ -14,13 +14,23 @@ public class Produto {
     private EstadoProduto estado;
     private Categoria categoria;
 
-      public Produto(int produto_id, String nome, String descricao, double preco, EstadoProduto estado, Categoria categoria) {
+    public Produto(int produto_id, String nome, String descricao, double preco, EstadoProduto estado, Categoria categoria) {
         this.produto_id = produto_id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.estado = estado;
         this.categoria = categoria;
+    }
+    
+    public void mostrarProduto(){
+        System.out.println("Dados do produto:");
+        System.out.println("ID: " + produto_id);
+        System.out.println("Nome: " + nome);
+        System.out.println("Descricao: " + descricao);
+        System.out.println("Preco: R$ " + preco);
+        System.out.println("Estado: " + estado.getDescricao());
+        System.out.println("Categoria: " + categoria.getNome());
     }
 
     public int getProduto_id() {

@@ -9,8 +9,19 @@ import java.util.ArrayList;
 public class Estoque {
     private ArrayList<ProdutoEstoque> produtos;
 
-    public Estoque(ArrayList<ProdutoEstoque> produtos) {
-        this.produtos = produtos;
+    public Estoque() {
+        produtos = new ArrayList();
+    }
+    
+    public void mostrarProdutos(){
+        for(ProdutoEstoque produtolist : produtos){
+            produtolist.getProduto().mostrarProduto();
+            System.out.println("\n-----------\n");
+        }
+    }
+    
+    public void addProdutoEstoque(ProdutoEstoque p) {
+        this.produtos.add(p);
     }
     
     public ArrayList<ProdutoEstoque> getProdutos() {

@@ -17,4 +17,9 @@ public class Disponivel implements EstadoProduto{
         produto.setEstado(new Indisponivel());
         System.out.println("Produto indisponibilizado com sucesso!");
     }
+    
+    @Override
+    public String getDescricao(){
+        return "Disponivel";
+    }
 }

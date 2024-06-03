@@ -18,4 +18,8 @@ public class Indisponivel implements EstadoProduto{
         System.out.println("Esse produto já está indisponível.");
     }
     
+    @Override
+    public String getDescricao(){
+        return "Indisponivel";
+    }
 }

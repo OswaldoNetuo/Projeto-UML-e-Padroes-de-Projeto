@@ -7,4 +7,5 @@ package Produto;
 public interface EstadoProduto {
     public void adicionar(Produto produto);
     public void remover(Produto produto);
+    public String getDescricao();
 }
