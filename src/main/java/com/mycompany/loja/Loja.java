@@ -9,11 +9,11 @@ import Categoria.*;
 import Pessoa.*;
 import Estoque.*;
 import CarrinhoCompras.*;
-import br.edu.utfpr.auth.AuthUser;
+/*import br.edu.utfpr.auth.AuthUser;
 import br.edu.utfpr.email.EmailValidator;
 import br.edu.utfpr.email.StrongEmailValidator;
 import br.edu.utfpr.senha.PasswordValidator;
-import br.edu.utfpr.senha.StrongPasswordValidator;
+import br.edu.utfpr.senha.StrongPasswordValidator;*/
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -68,8 +68,6 @@ public class Loja {
     public static ArrayList<Pessoa> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
-        
-        
 
         Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
         Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
@@ -170,9 +168,6 @@ public class Loja {
     public static void cadastrarCliente() {
         Scanner scanner = new Scanner(System.in);
         
-        EmailValidator strongEmailValidator = new StrongEmailValidator();
-        PasswordValidator strongPasswordValidator = new StrongPasswordValidator();
-        AuthUser authUser = new AuthUser(strongEmailValidator, strongPasswordValidator);
 
         System.out.println("Cadastro de Cliente");
         System.out.println("Digite seu nome:");
@@ -287,6 +282,17 @@ public class Loja {
                 System.out.println("Detalhes do produto");
                 System.out.println("Estado:" + produtoEscolhido.getProduto().getEstado().getDescricao());
                 System.out.println("Quantidade:" + produtoEscolhido.getQuantidade());
+                
+                System.out.println("Deseja adicionar unidades desse produto ao estoque?");
+                System.out.println("1. Sim");
+                System.out.println("2. Nao");
+                int escolha = scanner.nextInt();
+                if (escolha == 2) { menuFuncionario(funcionario); }
+                if (escolha == 1) {
+                    System.out.println("Digite a quantidade para adicionar");
+                    int add = scanner.nextInt();
+                    produtoEscolhido.atualizarQuantidade(add);
+                }
                 
                 menuFuncionario(funcionario);
             }
@@ -437,6 +443,7 @@ public class Loja {
         scanner.close();
     }
     
+    /*
     public static void menuEstoque(Funcionario funcionario){
         Scanner scanner = new Scanner(System.in);
 
@@ -463,4 +470,5 @@ public class Loja {
         }
         menuFuncionario(funcionario);
     }
+    */
 }
