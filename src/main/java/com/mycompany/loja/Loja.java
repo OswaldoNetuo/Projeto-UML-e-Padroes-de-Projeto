@@ -346,9 +346,7 @@ public class Loja {
                     System.out.println("\n----------\n");
                     System.out.println("Nome :" + list.getCarrinho().getCliente().getNome());
                     System.out.println("Endereco :" + list.getCarrinho().getCliente().getEndereco());
-                    System.out.println("Data :" + list.getData());
-                    System.out.println("\nItens comprados");
-                    list.getCarrinho().mostrarCarrinho();
+                    System.out.println("Data que o pedido foi realizado:" + list.getData());
                     System.out.println("\n----------\n");
                 }
                 menuGerente(gerente);
@@ -452,7 +450,7 @@ public class Loja {
 
             pagamento.pagar();
             //fazer um pedido
-            Pedido pedido = new Pedido(pedidos.size()+1, new Date(2024,06,01), carrinho, pagamento);
+            Pedido pedido = new Pedido(pedidos.size()+1, new Date(), carrinho, pagamento);
             pedidos.add(pedido);
             
             //limpar o carrinho
