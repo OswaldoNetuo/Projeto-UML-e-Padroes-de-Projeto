@@ -116,7 +116,7 @@ public class Loja {
                     } else if (usuario instanceof Funcionario funcionario) {
                         menuFuncionario(funcionario);
                     } else if (usuario instanceof Gerente) {
-                        //menuGerente((Gerente) usuario);
+                        menuGerente(Gerente);
                     }
                 } else {
                     System.out.println("Falha na autenticação.");
@@ -274,6 +274,34 @@ public class Loja {
             default -> {
                 invalid();
                 menuFuncionario(funcionario);
+            }
+        }
+    }
+    
+    public static void menuGerente(Gerente gerente){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bem-vindo, " + gerente.getNome());
+        System.out.println("1. Cadastrar produto");
+        System.out.println("2. Cadastrar categoria");
+        System.out.println("3. Cadastrar conta");
+        System.out.println("4. Sair");
+
+        int opcao = scanner.nextInt();
+        
+        switch(opcao) {
+            case 1 -> {
+                menuGerente(gerente);
+            }
+            case 2 -> {
+                menuGerente(gerente);
+            }
+            case 3 -> {
+                menuGerente(gerente);
+            }
+            default -> {
+                invalid();
+                menuGerente(gerente);
             }
         }
     }
