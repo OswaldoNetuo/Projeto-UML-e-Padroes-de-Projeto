@@ -9,6 +9,11 @@ import Categoria.*;
 import Pessoa.*;
 import Estoque.*;
 import CarrinhoCompras.*;
+import br.edu.utfpr.auth.AuthUser;
+import br.edu.utfpr.email.EmailValidator;
+import br.edu.utfpr.email.StrongEmailValidator;
+import br.edu.utfpr.senha.PasswordValidator;
+import br.edu.utfpr.senha.StrongPasswordValidator;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,6 +68,12 @@ public class Loja {
     public static ArrayList<Pessoa> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
+        
+        EmailValidator strongEmailValidator = new StrongEmailValidator();
+        PasswordValidator strongPasswordValidator = new StrongPasswordValidator();
+
+        AuthUser authUser = new AuthUser(strongEmailValidator, strongPasswordValidator);
+        authUser.autenticar("teste@exemplo.com", "Senha@123", "login");
 
         Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
         Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
