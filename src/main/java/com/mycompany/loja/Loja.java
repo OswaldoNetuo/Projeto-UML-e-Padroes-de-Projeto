@@ -277,6 +277,17 @@ public class Loja {
                 System.out.println("Estado:" + produtoEscolhido.getProduto().getEstado().getDescricao());
                 System.out.println("Quantidade:" + produtoEscolhido.getQuantidade());
                 
+                System.out.println("Deseja adicionar unidades desse produto ao estoque?");
+                System.out.println("1. Sim");
+                System.out.println("2. Nao");
+                int escolha = scanner.nextInt();
+                if (escolha == 2) { menuFuncionario(funcionario); }
+                if (escolha == 1) {
+                    System.out.println("Digite a quantidade para adicionar");
+                    int add = scanner.nextInt();
+                    produtoEscolhido.atualizarQuantidade(add);
+                }
+                
                 menuFuncionario(funcionario);
             }
             case 3 -> {
@@ -426,6 +437,7 @@ public class Loja {
         scanner.close();
     }
     
+    /*
     public static void menuEstoque(Funcionario funcionario){
         Scanner scanner = new Scanner(System.in);
 
@@ -452,4 +464,5 @@ public class Loja {
         }
         menuFuncionario(funcionario);
     }
+    */
 }
