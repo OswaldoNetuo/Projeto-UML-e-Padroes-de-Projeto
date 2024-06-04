@@ -10,9 +10,13 @@ import Categoria.*;
 import Pessoa.*;
 import Estoque.*;
 import CarrinhoCompras.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Loja {
+    
+    //Carrinho de compras 
+    public static CarrinhoCompras carrinho = new CarrinhoCompras();
     
     //Criar estoque
     public static Estoque estoque = new Estoque();
@@ -114,25 +118,46 @@ public class Loja {
         
         System.out.println("1. Produtos");
         System.out.println("2. Carrinho");
-        System.out.println("3. Conta");
-        System.out.println("4. Sair");
+        System.out.println("3. Sair");
         
         int opcao = scanner.nextInt();
         
         switch(opcao){
             case 1 -> {
                 estoque.mostrarProdutos();
+                System.out.println("Adicionar algum produto ao carrinho?");
+                System.out.println("1. Sim");
+                System.out.println("2. Nao");
+                int escolha = scanner.nextInt();
+                if (escolha == 2) { menuCliente(); }
+                if (escolha == 1) {
+                    System.out.println("Digite o ID do produto desejado");
+                    int id = scanner.nextInt();
+                    System.out.println("Digite a quantidade");
+                    int qtd = scanner.nextInt();
+                    
+                    ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
+                    Produto produtoEscolhido = null;
+                    for (ProdutoEstoque produtoEstoque : produtos) {
+                        if (produtoEstoque.getProduto().getProduto_id() == id) {
+                            produtoEscolhido = produtoEstoque.getProduto();
+                            break;
+                        }
+                    }
+
+                    if (produtoEscolhido != null) {
+                        carrinho.adicionarProduto(new ItemPedido(produtoEscolhido, qtd));
+                        System.out.println("Produto adicionado ao carrinho");
+                    } else {
+                        System.out.println("Produto nao encontrado.");
+                    }
+                }
                 menuCliente();
             }
             case 2 -> {
-                CarrinhoCompras carrinho = new CarrinhoCompras();
-                carrinho.mostrarCarrinho();
                 menuCarrinho();
             }
             case 3 -> {
-                menuConta();
-            }
-            case 4 -> {
                 menuPrincipal();
             }
             default -> {
@@ -144,12 +169,49 @@ public class Loja {
         scanner.close();
     }
     
-    public static void menuConta(){
-        menuPrincipal();
-    }
-    
     public static void menuCarrinho(){
-        menuPag();
+        Scanner scanner = new Scanner(System.in);
+        
+        carrinho.mostrarCarrinho();
+        
+        System.out.println("1. Finalizar Compra");
+        System.out.println("2. Retirar item");
+        System.out.println("3. Sair");
+        
+        int opcao = scanner.nextInt();
+        
+        switch(opcao) {
+            case 1 -> {
+                menuPag();
+            }
+            case 2 -> {
+                System.out.println("Digite o ID do produto desejado");
+                int id = scanner.nextInt();
+                    
+                ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
+                Produto produtoEscolhido = null;
+                for (ProdutoEstoque produtoEstoque : produtos) {
+                    if (produtoEstoque.getProduto().getProduto_id() == id) {
+                        produtoEscolhido = produtoEstoque.getProduto();
+                        break;
+                    }
+                }
+
+                if (produtoEscolhido != null) {
+                    carrinho.removerProduto(new ItemPedido(produtoEscolhido, 1));
+                    System.out.println("Produto removido");
+                } else {
+                    System.out.println("Produto nao encontrado.");
+                }    
+            }
+            case 3 -> {
+                menuCliente();
+            }
+            default -> {
+                invalid();
+                menuCliente();
+            }
+        }
     }
     
     public static void menuPag(){
@@ -200,7 +262,7 @@ public class Loja {
                     pagamento = new Pix(cpf);
                 }
                 case 4 -> {
-                    menuPrincipal();
+                    menuCliente();
                 }
                 default -> {
                     invalid();
@@ -210,7 +272,7 @@ public class Loja {
 
             pagamento.pagar();
         }
-
+        menuCliente();
         scanner.close();
     }
 }

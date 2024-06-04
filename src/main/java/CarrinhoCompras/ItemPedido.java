@@ -6,7 +6,7 @@ package CarrinhoCompras;
 
 import Produto.Produto;
 
-class ItemPedido {
+public class ItemPedido {
     private Produto produto;
     private int quantidade;
 
