@@ -31,7 +31,7 @@ public class Loja {
 
     //Definindo produtos
     public static Produto Camisa1 = new Produto(1, "Camisa Azul Media", "Cor - Azul | Tamanho - M", 40, Disponivel, Camisa);
-    public static Produto Camisa2 = new Produto(2, "Camisa Azul Media", "Cor - Azul | Tamanho - M", 40, Disponivel, Camisa);
+    public static Produto Camisa2 = new Produto(2, "Camisa Amarela Media", "Cor - Amarela | Tamanho - M", 40, Disponivel, Camisa);
     public static Produto Camisa3 = new Produto(3, "Camisa Vermelha Grande", "Cor - Vermelho | Tamanho - G", 50, Disponivel, Camisa);
     public static Produto Camisa4 = new Produto(4, "Camisa Branca Pequena", "Cor - Branco | Tamanho - P", 35, Indisponivel, Camisa);
     public static Produto Calca1 = new Produto(5, "Calca Jeans 34", "Cor - Azul | Tamanho - 34", 70, Disponivel, Calca);
@@ -240,7 +240,7 @@ public class Loja {
 
         System.out.println("Bem-vindo, " + funcionario.getNome());
         System.out.println("1. Produtos");
-        System.out.println("2. Estoque");
+        System.out.println("2. Verificar produto no estoque");
         System.out.println("3. Sair");
 
         int opcao = scanner.nextInt();
@@ -251,8 +251,21 @@ public class Loja {
                 menuFuncionario(funcionario);
             }
             case 2 -> {
-                System.out.println("Funcionalidade de gerenciamento de estoque");
-                //FAZER MENU PARA GERENCIAMENTO DE ESTOQUE 
+                System.out.println("Digite o ID do produto");
+                int id = scanner.nextInt();
+                
+                ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
+                ProdutoEstoque produtoEscolhido = null;
+                for (ProdutoEstoque produtoEstoque : produtos) {
+                    if (produtoEstoque.getProduto().getProduto_id() == id) {
+                        produtoEscolhido = produtoEstoque;
+                        break;
+                    }
+                }
+                System.out.println("Detalhes do produto");
+                System.out.println("Estado:" + produtoEscolhido.getProduto().getEstado().getDescricao());
+                System.out.println("Quantidade:" + produtoEscolhido.getQuantidade());
+                
                 menuFuncionario(funcionario);
             }
             case 3 -> {
@@ -353,8 +366,51 @@ public class Loja {
             }
 
             pagamento.pagar();
+            //limpar o carrinho
+            ArrayList<ItemPedido> Itens = new ArrayList<>(carrinho.getItens());
+            ArrayList<ProdutoEstoque> Produtos = estoque.getProdutos();
+            for (ItemPedido item : Itens) {
+                int quantidade = item.getQuantidade();
+                int produtoId = item.getProduto().getProduto_id();
+                carrinho.removerProduto(produtoId);
+                
+                // Atualizando a quantidade do produto no estoque
+                for (ProdutoEstoque produtoEstoque : Produtos) {
+                    if (produtoEstoque.getProduto().getProduto_id() == produtoId) {
+                        produtoEstoque.atualizarQuantidade(-quantidade);
+                        break;
+                    }
+                }
+            }
         }
         menuCliente(cliente);
         scanner.close();
+    }
+    
+    public static void menuEstoque(Funcionario funcionario){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bem-vindo, " + funcionario.getNome());
+        System.out.println("1. Ver produtos");
+        System.out.println("2. ");
+        System.out.println("3. Sair");
+
+        int opcao = scanner.nextInt();
+        
+        switch(opcao) {
+            case 1 -> {
+                menuEstoque(funcionario);
+            }
+            case 2 -> {
+                menuEstoque(funcionario);
+            }
+            case 3 -> {
+                menuFuncionario(funcionario);
+            }
+            default -> {
+                invalid();
+            }
+        }
+        menuFuncionario(funcionario);
     }
 }
