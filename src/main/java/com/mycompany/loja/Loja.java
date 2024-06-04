@@ -91,6 +91,7 @@ public class Loja {
         
         switch(opcao){
             case 1 -> {
+                
                 menuCliente();
             }
             case 2 -> {

@@ -11,13 +11,15 @@ import java.time.format.DateTimeParseException;
 
 public class CartaoCredito implements Pagamento {
     private String numero;
-    private YearMonth validade;
     private String cvv;
+    private YearMonth validade;
+    
 
     public CartaoCredito(String numeroCartao, String validade, String cvv) {
         this.numero = numeroCartao;
-        this.validade = parseYearMonth(validade);
         this.cvv = cvv;
+        this.validade = analisaYearMonth(validade);
+        
     }
     
     @Override
@@ -55,6 +57,11 @@ public class CartaoCredito implements Pagamento {
         this.cvv = cvv;
     }
     
+    public void setValidade(YearMonth validade){
+        this.validade = validade;
+    }
+    
+    
     private boolean validarNumeroCartao(String numeroCartao) {
         return numeroCartao != null && numeroCartao.matches("\\d{16}");
     }
@@ -68,7 +75,7 @@ public class CartaoCredito implements Pagamento {
     }
     
     
-    private YearMonth parseYearMonth(String validade) {
+    private YearMonth analisaYearMonth(String validade) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
             return YearMonth.parse(validade, formatter);

@@ -17,7 +17,7 @@ public class CartaoDebito implements Pagamento{
     
     public CartaoDebito(String numeroCartao, String validade, String cvv) {
         this.numero = numeroCartao;
-        this.validade = parseYearMonth(validade);
+        this.validade = analisaYearMonth(validade);
         this.cvv = cvv;
     }
     
@@ -74,7 +74,7 @@ public class CartaoDebito implements Pagamento{
     }
     
     
-    private YearMonth parseYearMonth(String validade) {
+    private YearMonth analisaYearMonth(String validade) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
             return YearMonth.parse(validade, formatter);
