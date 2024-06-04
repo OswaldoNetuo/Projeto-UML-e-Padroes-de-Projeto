@@ -4,17 +4,27 @@
  */
 package Pedido;
 
-public class Cancelado implements EstadoPedido{
-    @Override
-    public void abrirPedido(){
-        
+public class Cancelado implements EstadoPedido {
+
+    private Pedido pedido;
+
+    public Cancelado(Pedido pedido) {
+        this.pedido = pedido;
     }
+
     @Override
-    public void cancelarPedido(){
-        
+    public void abrirPedido() {
+        System.out.println("O pedido ja foi cancelado e nao pode ser aberto.");
     }
+
     @Override
-    public void finalizarPedido(){
-        
-    }   
+    public void cancelarPedido() {
+        System.out.println("Pedido ja cancelado.");
+
+    }
+
+    @Override
+    public void finalizarPedido() {
+        System.out.println("O pedido ja foi cancelado e nao pode ser finalizado.");
+    }
 }

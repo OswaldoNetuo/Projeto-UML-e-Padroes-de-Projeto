@@ -18,7 +18,7 @@ public class Pix implements Pagamento {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Pagamento realizado com sucesso com Pix.");
+            System.out.println("Pagamento realizado com sucesso via Pix.");
         } else {
             System.out.println("Falha no pagamento: Dados do usuário inválidos, Pix cancelado.");
         }

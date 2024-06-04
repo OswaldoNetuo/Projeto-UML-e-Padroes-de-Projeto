@@ -13,6 +13,7 @@ public class CarrinhoCompras {
     
     public CarrinhoCompras() {
         this.itens = new ArrayList<>();
+        this.cliente = cliente;
     }
     
     public void adicionarProduto(ItemPedido i){
@@ -27,7 +28,7 @@ public class CarrinhoCompras {
         
     }
     
-    public double valorFinal(){
+    public double calcularTotal(){
         double total = 0.0;
         for (ItemPedido item : itens) {
             total += item.getProduto().getPreco() * item.getQuantidade();
