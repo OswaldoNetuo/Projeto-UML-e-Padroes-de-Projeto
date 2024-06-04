@@ -69,12 +69,6 @@ public class Loja {
     public static ArrayList<Pedido> pedidos = new ArrayList<>();
 
     public static void main(String[] args) {
-        
-        /*EmailValidator strongEmailValidator = new StrongEmailValidator();
-        PasswordValidator strongPasswordValidator = new StrongPasswordValidator();
-
-        AuthUser authUser = new AuthUser(strongEmailValidator, strongPasswordValidator);
-        authUser.autenticar("teste@exemplo.com", "Senha@123", "login");*/
 
         Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
         Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
@@ -164,7 +158,7 @@ public class Loja {
 
         scanner.close();
     }
-
+    
     public static Pessoa entrar() {
         Scanner scanner = new Scanner(System.in);
 
@@ -181,9 +175,14 @@ public class Loja {
 
         return null;
     }
+    
+
+        
+        
 
     public static void cadastrarCliente() {
         Scanner scanner = new Scanner(System.in);
+        
 
         System.out.println("Cadastro de Cliente");
         System.out.println("Digite seu nome:");
@@ -196,11 +195,18 @@ public class Loja {
         String endereco = scanner.nextLine();
         System.out.println("Digite seu telefone:");
         String telefone = scanner.nextLine();
+        
+        boolean auth = authUser.autenticar(email, senha, "login");
+        
+        if (auth == true){
 
-        Cliente novoCliente = new Cliente(clientes.size() + 1, endereco, telefone, nome, email, senha);
-        clientes.add(novoCliente);
-        usuarios.add(novoCliente);
-        System.out.println("Cliente cadastrado.");
+            Cliente novoCliente = new Cliente(clientes.size() + 1, endereco, telefone, nome, email, senha);
+            clientes.add(novoCliente);
+            usuarios.add(novoCliente);
+            System.out.println("Cliente cadastrado.");
+        } else System.out.println("Cliente nao cadastrado.");
+        
+        
     }
 
     public static void menuCliente(Cliente cliente) {
