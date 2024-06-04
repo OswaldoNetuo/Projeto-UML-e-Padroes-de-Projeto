@@ -16,12 +16,12 @@ public class Pedido {
     private Pagamento pagamento;
     private EstadoPedido estado;
 
-    public Pedido(int pedido_id, Date data, CarrinhoCompras carrinho, Pagamento pagamento, EstadoPedido estado) {
+    public Pedido(int pedido_id, Date data, CarrinhoCompras carrinho, Pagamento pagamento) {
         this.pedido_id = pedido_id;
         this.data = data;
         this.carrinho = carrinho;
         this.pagamento = pagamento;
-        this.estado = estado;
+        estado = new Aberto(this);
     }
 
     public int getPedido_id() {

@@ -14,12 +14,12 @@ public class Produto {
     private EstadoProduto estado;
     private Categoria categoria;
 
-    public Produto(int produto_id, String nome, String descricao, double preco, EstadoProduto estado, Categoria categoria) {
+    public Produto(int produto_id, String nome, String descricao, double preco, Categoria categoria) {
         this.produto_id = produto_id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        this.estado = estado;
+        estado = new Indisponivel(this);
         this.categoria = categoria;
     }
     

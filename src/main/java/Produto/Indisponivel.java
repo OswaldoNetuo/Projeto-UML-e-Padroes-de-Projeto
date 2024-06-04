@@ -5,11 +5,17 @@
 package Produto;
 
 public class Indisponivel implements EstadoProduto{
+    
+    private Produto produto;
+
+    public Indisponivel(Produto produto) {
+        this.produto = produto;
+    }
 
     @Override
     public void adicionar(Produto produto) {
         System.out.println("Atualizando status de disponibilidade do produto...");
-        produto.setEstado(new Disponivel());
+        produto.setEstado(new Disponivel(produto));
                 System.out.println("Produto disponibilizado com sucesso!");
     }
 
