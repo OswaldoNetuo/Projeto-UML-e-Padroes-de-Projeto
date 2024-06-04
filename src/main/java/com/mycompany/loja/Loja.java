@@ -115,8 +115,8 @@ public class Loja {
                         menuCliente(cliente);
                     } else if (usuario instanceof Funcionario funcionario) {
                         menuFuncionario(funcionario);
-                    } else if (usuario instanceof Gerente) {
-                        menuGerente(Gerente);
+                    } else if (usuario instanceof Gerente gerente) {
+                        menuGerente(gerente);
                     }
                 } else {
                     System.out.println("Falha na autenticação.");
