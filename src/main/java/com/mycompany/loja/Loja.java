@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.loja;
 
 import Pagamento.*;
@@ -10,10 +9,11 @@ import Categoria.*;
 import Pessoa.*;
 import Estoque.*;
 import CarrinhoCompras.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Loja {
-    
+
     //Criar estoque
     public static Estoque estoque = new Estoque();
 
@@ -21,11 +21,11 @@ public class Loja {
     public static Categoria Camisa = new Categoria(1, "Camisa", "Roupa");
     public static Categoria Calca = new Categoria(2, "Calca", "Roupa");
     public static Categoria Acessorio = new Categoria(3, "Acessorio", "Acessorio de Moda");
-    
+
     //Criar estados
     public static Disponivel Disponivel = new Disponivel();
     public static Indisponivel Indisponivel = new Indisponivel();
-    
+
     //Definindo produtos
     public static Produto Camisa1 = new Produto(1, "Camisa Azul Media", "Cor - Azul | Tamanho - M", 40, Disponivel, Camisa);
     public static Produto Camisa2 = new Produto(2, "Camisa Azul Media", "Cor - Azul | Tamanho - M", 40, Disponivel, Camisa);
@@ -38,7 +38,7 @@ public class Loja {
     public static Produto Acessorio2 = new Produto(9, "Oculos de Sol", "Cor - Preto | Lentes - UV400", 100, Disponivel, Acessorio);
     public static Produto Acessorio3 = new Produto(10, "Relogio de Pulso", "Cor - Prata | Tamanho - Ajustavel", 150, Disponivel, Acessorio);
     public static Produto Acessorio4 = new Produto(11, "Gravata Listrada", "Cor - Azul e Branco", 30, Disponivel, Acessorio);
-    
+
     //Adicionando produto ao estoque
     public static ProdutoEstoque p1 = new ProdutoEstoque(Camisa1, 10);
     public static ProdutoEstoque p2 = new ProdutoEstoque(Camisa2, 10);
@@ -51,16 +51,22 @@ public class Loja {
     public static ProdutoEstoque p9 = new ProdutoEstoque(Acessorio2, 10);
     public static ProdutoEstoque p10 = new ProdutoEstoque(Acessorio3, 5);
     public static ProdutoEstoque p11 = new ProdutoEstoque(Acessorio4, 10);
-    
-    //Definindo contas padrao
-    public static Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
-    public static Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
-    public static Cliente Cliente1 = new Cliente(1, "R Parana 405 Medianeira", "4599999-9999", "Roberta", "roberta@gmail.com", "roberta123");
+
+    public static ArrayList<Cliente> clientes = new ArrayList<>();
+    public static ArrayList<Funcionario> funcionarios = new ArrayList<>();
+    public static ArrayList<Gerente> gerentes = new ArrayList<>();
+
+    // Lista de usuários para autenticação
+    public static ArrayList<Pessoa> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
-        
+
+        Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
+        Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
+        Cliente Cliente1 = new Cliente(1, "R Parana 405 Medianeira", "4599999-9999", "Roberta", "roberta@gmail.com", "roberta123");
+
         System.out.println("Bem vindo a loja");
-        
+
         estoque.addProdutoEstoque(p1);
         estoque.addProdutoEstoque(p2);
         estoque.addProdutoEstoque(p3);
@@ -72,29 +78,50 @@ public class Loja {
         estoque.addProdutoEstoque(p9);
         estoque.addProdutoEstoque(p10);
         estoque.addProdutoEstoque(p11);
+
+        gerentes.add(Gerente1);
+        funcionarios.add(Funcionario1);
+        clientes.add(Cliente1);
         
+        usuarios.add(Gerente1);
+        usuarios.add(Funcionario1);
+        usuarios.add(Cliente1);
+
         menuPrincipal();
     }
-    
-    public static void invalid(){
+
+    public static void invalid() {
         System.out.println("Opcaco invalida.");
     }
-    
-    public static void menuPrincipal(){
+
+    public static void menuPrincipal() {
         Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("1. Log In");
-        System.out.println("2. Sign Up");
+
+        System.out.println("1. Entrar");
+        System.out.println("2. Cadastrar-se");
         System.out.println("3. Sair");
-        
+
         int opcao = scanner.nextInt();
-        
-        switch(opcao){
+
+        switch (opcao) {
             case 1 -> {
-                
-                menuCliente();
+                Pessoa usuario = entrar();
+
+                if (usuario != null) {
+                    if (usuario instanceof Cliente cliente) {
+                        menuCliente(cliente);
+                    } else if (usuario instanceof Funcionario funcionario) {
+                        menuFuncionario(funcionario);
+                    } else if (usuario instanceof Gerente) {
+                        //menuGerente((Gerente) usuario);
+                    }
+                } else {
+                    System.out.println("Falha na autenticação.");
+                    menuPrincipal();
+                }
             }
             case 2 -> {
+                cadastrarCliente();
                 menuPrincipal();
             }
             case 3 -> {
@@ -105,24 +132,62 @@ public class Loja {
                 menuPrincipal();
             }
         }
-        
+
         scanner.close();
     }
-    
-    public static void menuCliente(){
+
+    public static Pessoa entrar() {
         Scanner scanner = new Scanner(System.in);
-        
+
+        System.out.println("Digite seu email:");
+        String email = scanner.next();
+        System.out.println("Digite sua senha:");
+        String senha = scanner.next();
+
+        for (Pessoa usuario : usuarios) {
+            if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+                return usuario;
+            }
+        }
+
+        return null;
+    }
+
+    public static void cadastrarCliente() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Cadastro de Cliente");
+        System.out.println("Digite seu nome:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite seu email:");
+        String email = scanner.nextLine();
+        System.out.println("Digite sua senha:");
+        String senha = scanner.nextLine();
+        System.out.println("Digite seu endereço:");
+        String endereco = scanner.nextLine();
+        System.out.println("Digite seu telefone:");
+        String telefone = scanner.nextLine();
+
+        Cliente novoCliente = new Cliente(clientes.size() + 1, endereco, telefone, nome, email, senha);
+        clientes.add(novoCliente);
+        usuarios.add(novoCliente);
+        System.out.println("Cliente cadastrado.");
+    }
+
+    public static void menuCliente(Cliente cliente) {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("1. Produtos");
         System.out.println("2. Carrinho");
         System.out.println("3. Conta");
         System.out.println("4. Sair");
-        
+
         int opcao = scanner.nextInt();
-        
-        switch(opcao){
+
+        switch (opcao) {
             case 1 -> {
                 estoque.mostrarProdutos();
-                menuCliente();
+                menuCliente(cliente);
             }
             case 2 -> {
                 CarrinhoCompras carrinho = new CarrinhoCompras();
@@ -137,24 +202,58 @@ public class Loja {
             }
             default -> {
                 invalid();
-                menuCliente();
+                menuCliente(cliente);
             }
         }
-        
+
         scanner.close();
     }
-    
-    public static void menuConta(){
+
+    public static void menuFuncionario(Funcionario funcionario) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bem-vindo, " + funcionario.getNome());
+        System.out.println("1. Produtos");
+        System.out.println("2. Estoque");
+        System.out.println("3. Conta");
+        System.out.println("4. Sair");
+
+        int opcao = scanner.nextInt();
+
+        switch (opcao) {
+            case 1 -> {
+                estoque.mostrarProdutos();
+                menuFuncionario(funcionario);
+            }
+            case 2 -> {
+                System.out.println("Funcionalidade de gerenciamento de estoque");
+                //FAZER MENU PARA GERENCIAMENTO DE ESTOQUE 
+                menuFuncionario(funcionario);
+            }
+            case 3 -> {
+                menuConta();
+            }
+            case 4 -> {
+                menuPrincipal();
+            }
+            default -> {
+                invalid();
+                menuFuncionario(funcionario);
+            }
+        }
+    }
+
+    public static void menuConta() {
         menuPrincipal();
     }
-    
-    public static void menuCarrinho(){
+
+    public static void menuCarrinho() {
         menuPag();
     }
-    
-    public static void menuPag(){
+
+    public static void menuPag() {
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
             System.out.println("Selecione o metodo de pagamento:");
             System.out.println("1. Cartao de Credito");
@@ -192,7 +291,7 @@ public class Loja {
 
                     pagamento = new CartaoDebito(numeroCartao, validade, cvv);
                 }
-                
+
                 case 3 -> {
                     System.out.println("Digite o CPF (000.000.000-00):");
                     String cpf = scanner.next();
@@ -214,6 +313,3 @@ public class Loja {
         scanner.close();
     }
 }
-
-    
-
