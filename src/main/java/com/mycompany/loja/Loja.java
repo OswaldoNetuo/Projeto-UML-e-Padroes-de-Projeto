@@ -182,8 +182,6 @@ public class Loja {
 
         System.out.println("1. Produtos");
         System.out.println("2. Carrinho");
-        System.out.println("3. Conta");
-        System.out.println("4. Sair");
         System.out.println("3. Sair");
         
         int opcao = scanner.nextInt();
@@ -191,16 +189,12 @@ public class Loja {
         switch (opcao) {
             case 1 -> {
                 estoque.mostrarProdutos();
-
-                menuCliente(cliente);
                 
                 System.out.println("Adicionar algum produto ao carrinho?");
                 System.out.println("1. Sim");
                 System.out.println("2. Nao");
                 int escolha = scanner.nextInt();
-                if (escolha == 2) { 
-                    menuCliente(cliente); 
-                }
+                if (escolha == 2) { menuCliente(cliente); }
                 if (escolha == 1) {
                     System.out.println("Digite o ID do produto desejado");
                     int id = scanner.nextInt();
@@ -247,8 +241,7 @@ public class Loja {
         System.out.println("Bem-vindo, " + funcionario.getNome());
         System.out.println("1. Produtos");
         System.out.println("2. Estoque");
-        System.out.println("3. Conta");
-        System.out.println("4. Sair");
+        System.out.println("3. Sair");
 
         int opcao = scanner.nextInt();
 
@@ -263,9 +256,6 @@ public class Loja {
                 menuFuncionario(funcionario);
             }
             case 3 -> {
-                menuConta();
-            }
-            case 4 -> {
                 menuPrincipal();
             }
             default -> {
@@ -273,10 +263,6 @@ public class Loja {
                 menuFuncionario(funcionario);
             }
         }
-    }
-
-    public static void menuConta() {
-        menuPrincipal();
     }
     
     public static void menuCarrinho(Cliente cliente){
@@ -297,22 +283,7 @@ public class Loja {
             case 2 -> {
                 System.out.println("Digite o ID do produto desejado");
                 int id = scanner.nextInt();
-                    
-                ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
-                Produto produtoEscolhido = null;
-                for (ProdutoEstoque produtoEstoque : produtos) {
-                    if (produtoEstoque.getProduto().getProduto_id() == id) {
-                        produtoEscolhido = produtoEstoque.getProduto();
-                        break;
-                    }
-                }
-
-                if (produtoEscolhido != null) {
-                    carrinho.removerProduto(new ItemPedido(produtoEscolhido, 1));
-                    System.out.println("Produto removido");
-                } else {
-                    System.out.println("Produto nao encontrado.");
-                }    
+                carrinho.removerProduto(id);
             }
             case 3 -> {
                 menuCliente(cliente);
@@ -322,6 +293,7 @@ public class Loja {
                 menuCliente(cliente);
             }
         }
+        menuCliente(cliente);
     }
 
     public static void menuPag(Cliente cliente) {

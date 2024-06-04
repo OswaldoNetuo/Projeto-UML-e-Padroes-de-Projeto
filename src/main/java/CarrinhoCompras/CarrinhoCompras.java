@@ -20,8 +20,17 @@ public class CarrinhoCompras {
         this.itens.add(i);
     }
     
-    public void removerProduto(ItemPedido i){
-        this.itens.remove(i);
+    public void removerProduto(int id){
+        ItemPedido itemParaRemover = null;
+        for (ItemPedido item : itens) {
+            if (item.getProduto().getProduto_id() == id) {
+                itemParaRemover = item;
+                break;
+            }
+        }
+        if (itemParaRemover != null) {
+            this.itens.remove(itemParaRemover);
+        }
     }
     
     public void mostrarCarrinho(){
@@ -32,6 +41,18 @@ public class CarrinhoCompras {
             System.out.println("\n-----------\n");
         } 
         System.out.println("\n\nTotal:" + calcularTotal());
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public ArrayList<ItemPedido> getItens() {
+        return itens;
     }
     
     public double calcularTotal(){
