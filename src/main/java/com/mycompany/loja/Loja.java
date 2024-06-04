@@ -16,9 +16,6 @@ public class Loja {
     
     //Criar estoque
     public static Estoque estoque = new Estoque();
-    
-    //Criar carrinho
-    public static CarrinhoCompras carrinho = new CarrinhoCompras();
 
     //Criar categorias
     public static Categoria Camisa = new Categoria(1, "Camisa", "Roupa");
@@ -127,6 +124,7 @@ public class Loja {
                 menuCliente();
             }
             case 2 -> {
+                CarrinhoCompras carrinho = new CarrinhoCompras();
                 carrinho.mostrarCarrinho();
                 menuCarrinho();
             }

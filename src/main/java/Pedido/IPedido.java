@@ -4,10 +4,9 @@
  */
 package Pedido;
 
-/**
- *
- * @author isabe
- */
 public interface IPedido {
-    
+    public void abrirPedido();
+    public void cancelarPedido();
+    public void finalizarPedido();
+    public void pagar();
 }

@@ -22,8 +22,6 @@ public class Pedido {
         this.pagamento = pagamento;
         this.estado = estado;
     }
-    
-    
 
     public int getPedido_id() {
         return pedido_id;
