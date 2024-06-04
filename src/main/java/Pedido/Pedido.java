@@ -9,6 +9,7 @@ import Pagamento.Pagamento;
 import java.util.Date;
 
 public class Pedido {
+
     private int pedido_id;
     private Date data;
     private CarrinhoCompras carrinho;
@@ -61,5 +62,15 @@ public class Pedido {
 
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
-    }   
+    }
+
+    // @Override
+    public void cancelarPedido() {
+        estado.cancelarPedido();
+    }
+
+    //@Override
+    public void finalizarPedido() {
+        estado.finalizarPedido();
+    }
 }
