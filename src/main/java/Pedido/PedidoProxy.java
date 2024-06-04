@@ -5,18 +5,25 @@
 package Pedido;
 
 import CarrinhoCompras.CarrinhoCompras;
-import Pagamento.Pagamento;
+import Pagamento.*;
+import java.util.Date;
 
-public class PedidoProxy implements Pagamento{
+public class PedidoProxy extends Pedido{
     private int pedidoP_id;
     private Pedido pedido;
     private CarrinhoCompras carrinho;
     private Pagamento pag;
     private EstadoPedido estado;
 
-    @Override
-    public void pagar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public PedidoProxy(int pedidoP_id, Date date, CarrinhoCompras carrinho, Pagamento pag) {
+
+        super(pedidoP_id, new Date(), carrinho, pag);
+
+        this.pedidoP_id = pedidoP_id;
+        this.carrinho = carrinho;
+        this.pag = pag;
+        estado = new Aberto(this);
+
     }
 
     public void setPedidoP_id(int pedidoP_id) {
@@ -27,6 +34,7 @@ public class PedidoProxy implements Pagamento{
         this.pedido = pedido;
     }
 
+    @Override
     public void setCarrinho(CarrinhoCompras carrinho) {
         this.carrinho = carrinho;
     }
@@ -35,6 +43,7 @@ public class PedidoProxy implements Pagamento{
         this.pag = pag;
     }
 
+    @Override
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
     }
@@ -47,6 +56,7 @@ public class PedidoProxy implements Pagamento{
         return pedido;
     }
 
+    @Override
     public CarrinhoCompras getCarrinho() {
         return carrinho;
     }
@@ -55,6 +65,7 @@ public class PedidoProxy implements Pagamento{
         return pag;
     }
 
+    @Override
     public EstadoPedido getEstado() {
         return estado;
     }

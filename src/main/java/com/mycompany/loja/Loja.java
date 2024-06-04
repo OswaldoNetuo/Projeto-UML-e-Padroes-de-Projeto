@@ -450,8 +450,8 @@ public class Loja {
 
             pagamento.pagar();
             //fazer um pedido
-            Pedido pedido = new Pedido(pedidos.size()+1, new Date(), carrinho, pagamento);
-            pedidos.add(pedido);
+            PedidoProxy pedidoProxy = new PedidoProxy(pedidos.size()+1, new Date(), carrinho, pagamento);
+            pedidos.add(pedidoProxy);
             
             //limpar o carrinho
             ArrayList<ItemPedido> Itens = new ArrayList<>(carrinho.getItens());
