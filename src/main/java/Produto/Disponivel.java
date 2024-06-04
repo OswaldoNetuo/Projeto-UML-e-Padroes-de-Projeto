@@ -9,22 +9,19 @@ public class Disponivel implements EstadoProduto{
     private Produto produto;
     
     public Disponivel(Produto produto) {
-    }
-
-    public Disponivel() {
         this.produto = produto;
     }
 
     @Override
     public void adicionar(Produto produto) {
-        System.out.println("Esse produto já está disponível.");
+        //System.out.println("Esse produto já está disponível.");
     }
 
     @Override
     public void remover(Produto produto) {
-        System.out.println("Atualizando status de disponibilidade do produto...");
+        //System.out.println("Atualizando status de disponibilidade do produto...");
         produto.setEstado(new Indisponivel(produto));
-        System.out.println("Produto indisponibilizado com sucesso!");
+        //System.out.println("Produto indisponibilizado com sucesso!");
     }
     
     @Override

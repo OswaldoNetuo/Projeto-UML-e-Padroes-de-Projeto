@@ -14,14 +14,14 @@ public class Indisponivel implements EstadoProduto{
 
     @Override
     public void adicionar(Produto produto) {
-        System.out.println("Atualizando status de disponibilidade do produto...");
+        //System.out.println("Atualizando status de disponibilidade do produto...");
         produto.setEstado(new Disponivel(produto));
-                System.out.println("Produto disponibilizado com sucesso!");
+        //System.out.println("Produto disponibilizado com sucesso!");
     }
 
     @Override
     public void remover(Produto produto) {
-        System.out.println("Esse produto já está indisponível.");
+        //System.out.println("Esse produto já está indisponível.");
     }
     
     @Override

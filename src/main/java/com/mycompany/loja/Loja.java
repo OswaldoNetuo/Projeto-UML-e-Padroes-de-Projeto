@@ -10,6 +10,7 @@ import Pessoa.*;
 import Estoque.*;
 import CarrinhoCompras.*;
 import Pedido.*;
+import java.io.IOException;
 /*import br.edu.utfpr.auth.AuthUser;
 import br.edu.utfpr.email.EmailValidator;
 import br.edu.utfpr.email.StrongEmailValidator;
@@ -68,15 +69,13 @@ public class Loja {
     //Lista de pedidos
     public static ArrayList<Pedido> pedidos = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
         Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
         Cliente Cliente1 = new Cliente(1, "R Parana 405 Medianeira", "4599999-9999", "Roberta", "roberta@gmail.com", "roberta123");
         
         carrinho.setCliente(Cliente1);
-
-        System.out.println("Bem vindo a loja");
         
         p1.getProduto().getEstado().adicionar(p1.getProduto());
         p2.getProduto().getEstado().adicionar(p2.getProduto());
@@ -108,7 +107,9 @@ public class Loja {
         usuarios.add(Gerente1);
         usuarios.add(Funcionario1);
         usuarios.add(Cliente1);
-
+        
+        System.out.println("Bem vindo a loja");
+        
         menuPrincipal();
     }
 
@@ -175,10 +176,6 @@ public class Loja {
 
         return null;
     }
-    
-
-        
-        
 
     public static void cadastrarCliente() {
         Scanner scanner = new Scanner(System.in);
@@ -196,7 +193,7 @@ public class Loja {
         System.out.println("Digite seu telefone:");
         String telefone = scanner.nextLine();
         
-        boolean auth = authUser.autenticar(email, senha, "login");
+        /*boolean auth = authUser.autenticar(email, senha, "login");
         
         if (auth == true){
 
@@ -205,7 +202,7 @@ public class Loja {
             usuarios.add(novoCliente);
             System.out.println("Cliente cadastrado.");
         } else System.out.println("Cliente nao cadastrado.");
-        
+        */
         
     }
 
@@ -354,6 +351,7 @@ public class Loja {
                     list.getCarrinho().mostrarCarrinho();
                     System.out.println("\n----------\n");
                 }
+                menuGerente(gerente);
             }
             case 5 -> {
                 menuPrincipal();
