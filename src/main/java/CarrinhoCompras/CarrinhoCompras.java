@@ -25,7 +25,13 @@ public class CarrinhoCompras {
     }
     
     public void mostrarCarrinho(){
-        
+        System.out.println("\nItens no carrinho\n");
+        for(ItemPedido produtolist : itens){
+            produtolist.getProduto().mostrarProduto();
+            System.out.println("Quantidade:" + produtolist.getQuantidade());
+            System.out.println("\n-----------\n");
+        } 
+        System.out.println("\n\nTotal:" + calcularTotal());
     }
     
     public double calcularTotal(){
