@@ -4,6 +4,8 @@
  */
 package Estoque;
 
+import Produto.Disponivel;
+import Produto.Indisponivel;
 import Produto.Produto;
 
 public class ProdutoEstoque {
@@ -36,6 +38,13 @@ public class ProdutoEstoque {
         if (this.quantidade + quantidade < 0) {
             System.out.println("A quantidade que deseja remover é maior que a quantidade em estoque, tente novamente.");
         } else {
+            
+            if (this.quantidade + quantidade > 0){
+                this.produto.estado = new Disponivel(produto);
+            } else {
+               this.produto.estado = new Indisponivel(produto); 
+            }
+            
             this.quantidade += quantidade;
         }
     }

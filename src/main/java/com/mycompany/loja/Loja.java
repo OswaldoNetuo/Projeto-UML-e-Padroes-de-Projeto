@@ -24,7 +24,7 @@ public class Loja {
 
     //Carrinho de compras 
     public static CarrinhoCompras carrinho = new CarrinhoCompras();
-    
+
     //Criar estoque
     public static Estoque estoque = new Estoque();
 
@@ -65,18 +65,21 @@ public class Loja {
 
     // Lista de usuários para autenticação
     public static ArrayList<Pessoa> usuarios = new ArrayList<>();
-    
+
     //Lista de pedidos
     public static ArrayList<Pedido> pedidos = new ArrayList<>();
+
+    // Lista de categorias
+    public static ArrayList<Categoria> categorias = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
 
         Gerente Gerente1 = new Gerente(1, 3500, "Alice", "gerente@gmail.com", "gerente123");
         Funcionario Funcionario1 = new Funcionario(1, 2000, "Luke", "func@gmail.com", "func123");
         Cliente Cliente1 = new Cliente(1, "R Parana 405 Medianeira", "4599999-9999", "Roberta", "roberta@gmail.com", "roberta123");
-        
+
         carrinho.setCliente(Cliente1);
-        
+
         p1.getProduto().getEstado().adicionar(p1.getProduto());
         p2.getProduto().getEstado().adicionar(p2.getProduto());
         p3.getProduto().getEstado().adicionar(p3.getProduto());
@@ -103,13 +106,19 @@ public class Loja {
         gerentes.add(Gerente1);
         funcionarios.add(Funcionario1);
         clientes.add(Cliente1);
-        
+
         usuarios.add(Gerente1);
         usuarios.add(Funcionario1);
         usuarios.add(Cliente1);
-        
+
+        categorias.add(Camisa);
+        categorias.add(Acessorio);
+        categorias.add(Calca);
+
+        limpaTela();
+
         System.out.println("Bem vindo a loja");
-        
+
         menuPrincipal();
     }
 
@@ -117,6 +126,14 @@ public class Loja {
         System.out.println("Opcaco invalida.");
     }
 
+    //-----------LIMPA TELA--------
+    public static void limpaTela() {
+        for (int i = 0; i < 50; ++i) {
+            System.out.println();
+        }
+    }
+
+    //-------------------MENU PRINCIPAL----------------------
     public static void menuPrincipal() {
         Scanner scanner = new Scanner(System.in);
 
@@ -126,7 +143,7 @@ public class Loja {
 
         int opcao = scanner.nextInt();
 
-        switch (opcao) {
+     switch (opcao) {
             case 1 -> {
                 Pessoa usuario = entrar();
 
@@ -159,11 +176,13 @@ public class Loja {
 
         scanner.close();
     }
-    
+
+
+    //-------------------LOGIN--------------------
     public static Pessoa entrar() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite seu email:");
+        System.out.println(System.lineSeparator() + "Digite seu email:");
         String email = scanner.next();
         System.out.println("Digite sua senha:");
         String senha = scanner.next();
@@ -177,11 +196,11 @@ public class Loja {
         return null;
     }
 
+    //-----------------------CADASTRAR CLIENTE-----------------------
     public static void cadastrarCliente() {
         Scanner scanner = new Scanner(System.in);
-        
 
-        System.out.println("Cadastro de Cliente");
+        System.out.println(System.lineSeparator() + "Cadastro de Cliente" + System.lineSeparator());
         System.out.println("Digite seu nome:");
         String nome = scanner.nextLine();
         System.out.println("Digite seu email:");
@@ -193,43 +212,46 @@ public class Loja {
         System.out.println("Digite seu telefone:");
         String telefone = scanner.nextLine();
         
-        /*boolean auth = authUser.autenticar(email, senha, "login");
         
-        if (auth == true){
+        //boolean auth = authUser.autenticar(email, senha, "login");
+        //if (auth == true){
+        Cliente novoCliente = new Cliente(clientes.size() + 1, endereco, telefone, nome, email, senha);
+        clientes.add(novoCliente);
+        usuarios.add(novoCliente);
+        System.out.println(System.lineSeparator() + "Cliente cadastrado.");
+        //} else System.out.println("Cliente nao cadastrado.");
 
-            Cliente novoCliente = new Cliente(clientes.size() + 1, endereco, telefone, nome, email, senha);
-            clientes.add(novoCliente);
-            usuarios.add(novoCliente);
-            System.out.println("Cliente cadastrado.");
-        } else System.out.println("Cliente nao cadastrado.");
-        */
-        
     }
+
+  //  -------------------------MENU CLIENTE----------------------------
 
     public static void menuCliente(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("1. Produtos");
+        System.out.println(System.lineSeparator() + "Bem-vindo, " + cliente.getNome());
+        System.out.println(System.lineSeparator() + "1. Produtos");
         System.out.println("2. Carrinho");
         System.out.println("3. Sair");
-        
+
         int opcao = scanner.nextInt();
 
         switch (opcao) {
             case 1 -> {
                 estoque.mostrarProdutos();
-                
-                System.out.println("Adicionar algum produto ao carrinho?");
+
+                System.out.println(System.lineSeparator() + "Adicionar algum produto ao carrinho?");
                 System.out.println("1. Sim");
                 System.out.println("2. Nao");
                 int escolha = scanner.nextInt();
-                if (escolha == 2) { menuCliente(cliente); }
+                if (escolha == 2) {
+                    menuCliente(cliente);
+                }
                 if (escolha == 1) {
-                    System.out.println("Digite o ID do produto desejado");
+                    System.out.println(System.lineSeparator() + "Digite o ID do produto desejado");
                     int id = scanner.nextInt();
                     System.out.println("Digite a quantidade");
                     int qtd = scanner.nextInt();
-                    
+
                     ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
                     Produto produtoEscolhido = null;
                     for (ProdutoEstoque produtoEstoque : produtos) {
@@ -241,9 +263,9 @@ public class Loja {
 
                     if (produtoEscolhido != null) {
                         carrinho.adicionarProduto(new ItemPedido(produtoEscolhido, qtd));
-                        System.out.println("Produto adicionado ao carrinho");
+                        System.out.println(System.lineSeparator() + "Produto adicionado ao carrinho");
                     } else {
-                        System.out.println("Produto nao encontrado.");
+                        System.out.println(System.lineSeparator() + "Produto nao encontrado.");
                     }
                 }
                 menuCliente(cliente);
@@ -262,13 +284,14 @@ public class Loja {
 
         scanner.close();
     }
-
+    
+//-------------------------MENU FUNCIONARIO--------------------------
 
     public static void menuFuncionario(Funcionario funcionario) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Bem-vindo, " + funcionario.getNome());
-        System.out.println("1. Produtos");
+        System.out.println(System.lineSeparator() + "Bem-vindo, " + funcionario.getNome());
+        System.out.println(System.lineSeparator() + "1. Produtos");
         System.out.println("2. Verificar produto no estoque");
         System.out.println("3. Sair");
 
@@ -280,32 +303,22 @@ public class Loja {
                 menuFuncionario(funcionario);
             }
             case 2 -> {
-                System.out.println("Digite o ID do produto");
-                int id = scanner.nextInt();
-                
-                ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
-                ProdutoEstoque produtoEscolhido = null;
-                for (ProdutoEstoque produtoEstoque : produtos) {
-                    if (produtoEstoque.getProduto().getProduto_id() == id) {
-                        produtoEscolhido = produtoEstoque;
-                        break;
-                    }
-                }
-                System.out.println("Detalhes do produto");
-                System.out.println("Estado:" + produtoEscolhido.getProduto().getEstado().getDescricao());
-                System.out.println("Quantidade:" + produtoEscolhido.getQuantidade());
-                
-                System.out.println("Deseja adicionar unidades desse produto ao estoque?");
+
+                ProdutoEstoque produtoEscolhido = verificarProduto();
+
+                System.out.println(System.lineSeparator() + "Deseja adicionar unidades desse produto ao estoque?");
                 System.out.println("1. Sim");
                 System.out.println("2. Nao");
                 int escolha = scanner.nextInt();
-                if (escolha == 2) { menuFuncionario(funcionario); }
+                if (escolha == 2) {
+                    menuFuncionario(funcionario);
+                }
                 if (escolha == 1) {
-                    System.out.println("Digite a quantidade para adicionar");
+                    System.out.println(System.lineSeparator() + "Digite a quantidade para adicionar");
                     int add = scanner.nextInt();
                     produtoEscolhido.atualizarQuantidade(add);
                 }
-                
+
                 menuFuncionario(funcionario);
             }
             case 3 -> {
@@ -318,31 +331,58 @@ public class Loja {
         }
     }
     
-    public static void menuGerente(Gerente gerente){
+    //------------------------VERIFICAR PRODUTO--------------------------  
+
+    public static ProdutoEstoque verificarProduto() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Bem-vindo, " + gerente.getNome());
-        System.out.println("1. Cadastrar produto");
+        System.out.println(System.lineSeparator() + "Digite o ID do produto");
+        int id = scanner.nextInt();
+
+        ArrayList<ProdutoEstoque> produtos = estoque.getProdutos();
+        ProdutoEstoque produtoEscolhido = null;
+        for (ProdutoEstoque produtoEstoque : produtos) {
+            if (produtoEstoque.getProduto().getProduto_id() == id) {
+                produtoEscolhido = produtoEstoque;
+                break;
+            }
+        }
+        System.out.println("Detalhes do produto");
+        System.out.println("Estado:" + produtoEscolhido.getProduto().getEstado().getDescricao());
+        System.out.println("Quantidade:" + produtoEscolhido.getQuantidade());
+
+        return produtoEscolhido;
+    }
+    
+//--------------------------MENU GERENTE-----------------------------
+    public static void menuGerente(Gerente gerente) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(System.lineSeparator() + "Bem-vindo, " + gerente.getNome());
+        System.out.println(System.lineSeparator() + "1. Cadastrar produto");
         System.out.println("2. Cadastrar categoria");
         System.out.println("3. Cadastrar conta");
         System.out.println("4. Ver pedidos");
-        System.out.println("5. Sair");
+        System.out.println("5. Verificar produto no estoque");
+        System.out.println("6. Sair");
 
         int opcao = scanner.nextInt();
-        
-        switch(opcao) {
+
+        switch (opcao) {
             case 1 -> {
                 cadastrarProduto();
                 menuGerente(gerente);
             }
             case 2 -> {
+                cadastrarCategoria();
                 menuGerente(gerente);
             }
             case 3 -> {
+                cadastrarConta();
                 menuGerente(gerente);
             }
             case 4 -> {
-                for (Pedido list : pedidos){
+                for (Pedido list : pedidos) {
                     System.out.println("\n----------\n");
                     System.out.println("Nome :" + list.getCarrinho().getCliente().getNome());
                     System.out.println("Endereco :" + list.getCarrinho().getCliente().getEndereco());
@@ -352,6 +392,24 @@ public class Loja {
                 menuGerente(gerente);
             }
             case 5 -> {
+                ProdutoEstoque produtoEscolhido = verificarProduto();
+
+                System.out.println(System.lineSeparator() + "Deseja adicionar unidades desse produto ao estoque?");
+                System.out.println("1. Sim");
+                System.out.println("2. Nao");
+                int escolha = scanner.nextInt();
+                if (escolha == 2) {
+                    menuGerente(gerente);
+                }
+                if (escolha == 1) {
+                    System.out.println(System.lineSeparator() + "Digite a quantidade para adicionar");
+                    int add = scanner.nextInt();
+                    produtoEscolhido.atualizarQuantidade(add);
+                }
+
+                menuGerente(gerente);
+            }
+            case 6 -> {
                 menuPrincipal();
             }
             default -> {
@@ -360,19 +418,139 @@ public class Loja {
             }
         }
     }
-    
-    public static void menuCarrinho(Cliente cliente){
+
+        //---------------------CADASTRO DE PRODUTO-----------------------
+    public static void cadastrarProduto() {
         Scanner scanner = new Scanner(System.in);
-        
+
+        System.out.println(System.lineSeparator() + "Cadastro de Produto");
+        System.out.println(System.lineSeparator() + "Digite o nome do produto:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite a descricao do produto:");
+        String descricao = scanner.nextLine();
+        System.out.println("Digite o preco do produto:");
+        double preco = scanner.nextDouble();
+
+        System.out.println(System.lineSeparator() + "Categorias disponiveis:");
+        for (Categoria categoria : categorias) {
+            System.out.println("ID: " + categoria.getCategoria_id() + " - Nome: " + categoria.getNome());
+        }
+
+        System.out.println("Digite o ID da categoria do produto:");
+        int categoriaId = scanner.nextInt();
+
+        Categoria categoriaSelecionada = null;
+        for (Categoria categoria : categorias) {
+            if (categoria.getCategoria_id() == categoriaId) {
+                categoriaSelecionada = categoria;
+                break;
+            }
+
+        }
+
+        if (categoriaSelecionada == null) {
+            System.out.println(System.lineSeparator() + "Categoria invalida. Produto nao cadastrado.");
+        }
+
+        Produto novoProduto = new Produto(estoque.getProdutos().size() + 1, nome, descricao, preco, categoriaSelecionada);
+        ProdutoEstoque novoProdutoEstoque = new ProdutoEstoque(novoProduto, 0);
+        novoProdutoEstoque.getProduto().getEstado().adicionar(p11.getProduto());
+        estoque.addProdutoEstoque(novoProdutoEstoque);
+
+        System.out.println(System.lineSeparator() + "O produto cadastrado esta sem unidades em estoque. Adicione voltando ao menu anterior!");
+        System.out.println(System.lineSeparator() + "Produto cadastrado com sucesso!");
+    }
+    
+        //----------------------CADASTRO DE CATEGORIA-------------------
+    public static void cadastrarCategoria() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(System.lineSeparator() + "Cadastro de Categoria" + System.lineSeparator());
+        System.out.println("Digite o nome da categoria:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite a descricao da categoria:");
+        String descricao = scanner.nextLine();
+
+        Categoria novaCategoria = new Categoria(categorias.size() + 1, nome, descricao);
+        categorias.add(novaCategoria);
+    }
+    
+        //----------------------CADASTRO DE CONTA-----------------------
+    public static void cadastrarConta() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(System.lineSeparator() + "Que tipo de conta deseja cadastrar?");
+        System.out.println("1. Gerente");
+        System.out.println("2. Funcionario");
+        int escolha = scanner.nextInt();
+        if (escolha == 1) {
+            cadastrarGerente();
+        }
+        if (escolha == 2) {
+            cadastrarFuncionario();
+        }
+    }
+    //----------------------CADASTRO GERENTE--------------------
+
+    public static void cadastrarGerente() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(System.lineSeparator() + "Cadastro de Gerente" + System.lineSeparator());
+        System.out.println("Digite o nome:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite o email:");
+        String email = scanner.nextLine();
+        System.out.println("Digite a senha:");
+        String senha = scanner.nextLine();
+        System.out.println("Digite o salario:");
+        double salario = scanner.nextDouble();
+
+        //boolean auth = authUser.autenticar(email, senha, "login");
+        //if (auth == true){
+        Gerente novoGerente = new Gerente(gerentes.size() + 1, salario, nome, email, senha);
+        gerentes.add(novoGerente);
+        usuarios.add(novoGerente);
+        System.out.println(System.lineSeparator() + "Gerente cadastrado.");
+        //} else System.out.println("Gerente nao cadastrado.");
+    }
+
+    //----------------------CADASTRO FUNCIONARIO--------------------
+    public static void cadastrarFuncionario() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(System.lineSeparator() + "Cadastro de Funcionario" + System.lineSeparator());
+        System.out.println("Digite o nome:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite o email:");
+        String email = scanner.nextLine();
+        System.out.println("Digite a senha:");
+        String senha = scanner.nextLine();
+        System.out.println("Digite o salario:");
+        double salario = scanner.nextDouble();
+
+        //boolean auth = authUser.autenticar(email, senha, "login");
+        //if (auth == true){
+        Funcionario novoFuncionario = new Funcionario(funcionarios.size() + 1, salario, nome, email, senha);
+        funcionarios.add(novoFuncionario);
+        usuarios.add(novoFuncionario);
+        System.out.println(System.lineSeparator() + "Funcionario cadastrado.");
+        //} else System.out.println("Funcionario nao cadastrado.");
+    }
+
+
+      //-----------------------MENU CARRINHO--------------------------
+    public static void menuCarrinho(Cliente cliente) {
+        Scanner scanner = new Scanner(System.in);
+
         carrinho.mostrarCarrinho();
-        
-        System.out.println("1. Finalizar Compra");
+
+        System.out.println(System.lineSeparator() + "1. Finalizar Compra");
         System.out.println("2. Retirar item");
         System.out.println("3. Sair");
-        
+
         int opcao = scanner.nextInt();
-        
-        switch(opcao) {
+
+        switch (opcao) {
             case 1 -> {
                 menuPag(cliente);
             }
@@ -391,20 +569,21 @@ public class Loja {
         }
         menuCliente(cliente);
     }
-
+    
+  //------------------MENU PAGAMENTO-----------------------
     public static void menuPag(Cliente cliente) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Selecione o metodo de pagamento:");
-            System.out.println("1. Cartao de Credito");
+            System.out.println(System.lineSeparator() + "Selecione o metodo de pagamento:");
+            System.out.println(System.lineSeparator() + "1. Cartao de Credito");
             System.out.println("2. Cartao de Debito");
             System.out.println("3. Pix");
             System.out.println("4. Sair");
             int opcao = scanner.nextInt();
 
             if (opcao == 4) {
-                System.out.println("Saindo do sistema de pagamentos.");
+                System.out.println(System.lineSeparator() + "Saindo do sistema de pagamentos.");
                 break;
             }
 
@@ -412,7 +591,7 @@ public class Loja {
 
             switch (opcao) {
                 case 1 -> {
-                    System.out.println("Digite o numero do cartao:");
+                    System.out.println(System.lineSeparator() + "Digite o numero do cartao:");
                     String numeroCartao = scanner.next();
                     System.out.println("Digite a validade (MM/AA):");
                     String validade = scanner.next();
@@ -423,7 +602,7 @@ public class Loja {
                 }
 
                 case 2 -> {
-                    System.out.println("Digite o numero do cartao:");
+                    System.out.println(System.lineSeparator() + "Digite o numero do cartao:");
                     String numeroCartao = scanner.next();
                     System.out.println("Digite a validade (MM/AA):");
                     String validade = scanner.next();
@@ -434,7 +613,7 @@ public class Loja {
                 }
 
                 case 3 -> {
-                    System.out.println("Digite o CPF (000.000.000-00):");
+                    System.out.println(System.lineSeparator() + "Digite o CPF (000.000.000-00):");
                     String cpf = scanner.next();
 
                     pagamento = new Pix(cpf);
@@ -450,9 +629,11 @@ public class Loja {
 
             pagamento.pagar();
             //fazer um pedido
+
             PedidoProxy pedidoProxy = new PedidoProxy(pedidos.size()+1, new Date(), carrinho, pagamento);
             pedidos.add(pedidoProxy);
             
+
             //limpar o carrinho
             ArrayList<ItemPedido> Itens = new ArrayList<>(carrinho.getItens());
             ArrayList<ProdutoEstoque> Produtos = estoque.getProdutos();
@@ -460,7 +641,7 @@ public class Loja {
                 int quantidade = item.getQuantidade();
                 int produtoId = item.getProduto().getProduto_id();
                 carrinho.removerProduto(produtoId);
-                
+
                 // Atualizando a quantidade do produto no estoque
                 for (ProdutoEstoque produtoEstoque : Produtos) {
                     if (produtoEstoque.getProduto().getProduto_id() == produtoId) {
@@ -469,52 +650,9 @@ public class Loja {
                     }
                 }
             }
-            
+
         }
         menuCliente(cliente);
         scanner.close();
-    }
-    
-    /*
-    public static void menuEstoque(Funcionario funcionario){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Bem-vindo, " + funcionario.getNome());
-        System.out.println("1. Ver produtos");
-        System.out.println("2. ");
-        System.out.println("3. Sair");
-
-        int opcao = scanner.nextInt();
-        
-        switch(opcao) {
-            case 1 -> {
-                menuEstoque(funcionario);
-            }
-            case 2 -> {
-                menuEstoque(funcionario);
-            }
-            case 3 -> {
-                menuFuncionario(funcionario);
-            }
-            default -> {
-                invalid();
-            }
-        }
-        menuFuncionario(funcionario);
-    }
-    */
-    
-    public static void cadastrarProduto(){
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("Cadastro de Produto");
-        System.out.println("Digite o nome do produto:");
-        String nome = scanner.nextLine();
-        System.out.println("Digite a descricao do produto:");
-        String descricao = scanner.nextLine();
-        System.out.println("Digite o preco do produto:");
-        double preco = scanner.nextDouble();
-        
-        
     }
 }

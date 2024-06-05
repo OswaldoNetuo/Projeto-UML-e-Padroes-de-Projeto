@@ -11,7 +11,7 @@ public class Produto {
     private String nome;
     private String descricao;
     private double preco;
-    private EstadoProduto estado;
+    public EstadoProduto estado;
     private Categoria categoria;
 
     public Produto(int produto_id, String nome, String descricao, double preco, Categoria categoria) {
