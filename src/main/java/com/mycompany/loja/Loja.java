@@ -11,11 +11,11 @@ import Estoque.*;
 import CarrinhoCompras.*;
 import Pedido.*;
 import java.io.IOException;
-/*import br.edu.utfpr.auth.AuthUser;
+import br.edu.utfpr.auth.AuthUser;
 import br.edu.utfpr.email.EmailValidator;
 import br.edu.utfpr.email.StrongEmailValidator;
 import br.edu.utfpr.senha.PasswordValidator;
-import br.edu.utfpr.senha.StrongPasswordValidator;*/
+import br.edu.utfpr.senha.StrongPasswordValidator;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -167,6 +167,7 @@ public class Loja {
             }
             case 3 -> {
                 System.out.println("Tchau!");
+                return;
             }
             default -> {
                 invalid();
@@ -211,6 +212,7 @@ public class Loja {
         String endereco = scanner.nextLine();
         System.out.println("Digite seu telefone:");
         String telefone = scanner.nextLine();
+        
         
         
         //boolean auth = authUser.autenticar(email, senha, "login");
@@ -504,14 +506,19 @@ public class Loja {
         String senha = scanner.nextLine();
         System.out.println("Digite o salario:");
         double salario = scanner.nextDouble();
+        
+        EmailValidator strongEmailValidator = new StrongEmailValidator();
+        PasswordValidator strongPasswordValidator = new StrongPasswordValidator();
 
-        //boolean auth = authUser.autenticar(email, senha, "login");
-        //if (auth == true){
+        AuthUser authUser = new AuthUser(strongEmailValidator, strongPasswordValidator);
+
+        boolean auth = authUser.autenticar(email, senha, "login");
+        if (auth == true){
         Gerente novoGerente = new Gerente(gerentes.size() + 1, salario, nome, email, senha);
         gerentes.add(novoGerente);
         usuarios.add(novoGerente);
         System.out.println(System.lineSeparator() + "Gerente cadastrado.");
-        //} else System.out.println("Gerente nao cadastrado.");
+        } else System.out.println("Gerente nao cadastrado.");
     }
 
     //----------------------CADASTRO FUNCIONARIO--------------------
@@ -527,14 +534,19 @@ public class Loja {
         String senha = scanner.nextLine();
         System.out.println("Digite o salario:");
         double salario = scanner.nextDouble();
+        
+        EmailValidator strongEmailValidator = new StrongEmailValidator();
+        PasswordValidator strongPasswordValidator = new StrongPasswordValidator();
 
-        //boolean auth = authUser.autenticar(email, senha, "login");
-        //if (auth == true){
+        AuthUser authUser = new AuthUser(strongEmailValidator, strongPasswordValidator);
+
+        boolean auth = authUser.autenticar(email, senha, "login");
+        if (auth == true){
         Funcionario novoFuncionario = new Funcionario(funcionarios.size() + 1, salario, nome, email, senha);
         funcionarios.add(novoFuncionario);
         usuarios.add(novoFuncionario);
         System.out.println(System.lineSeparator() + "Funcionario cadastrado.");
-        //} else System.out.println("Funcionario nao cadastrado.");
+        } else System.out.println("Funcionario nao cadastrado.");
     }
 
 
